@@ -64,7 +64,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 7;
+    return 8;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -102,6 +102,10 @@
         case 6 :
             title = @"Twitter on App Store (tradedoubler)";
             break;
+        case 7 :
+            title = @"Radiohead on iTunes from ID";
+            break;
+
     }
     
     cell.textLabel.text = title;
@@ -152,6 +156,25 @@
         {
             affilateRedirection.affilateURL = [NSURL URLWithString:@"http://clk.tradedoubler.com/click?p=23753&a=1611348&g=0&td_partnerId=2003&url=https://itunes.apple.com/fr/app/twitter/id333903271"];
             [affilateRedirection openAffiliateRedirectionOnAppStoreWithBlock:^(NSError *error) {
+                [loadingAppStoreView removeFromSuperview];
+
+                if (error) {
+                    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                 message:error.localizedDescription
+                                                                delegate:nil
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil,
+                                       nil];
+                    [av show];
+                }
+            }];
+            return;
+            break;
+        }
+        case 7:
+        {
+            affilateRedirection.affilateURL = [NSURL URLWithItunesArtistId:@657515 andAffiliateId:@"12345"];
+            [affilateRedirection openAffiliateRedirectionOnItunesWithBlock:^(NSError *error) {
                 [loadingAppStoreView removeFromSuperview];
 
                 if (error) {

@@ -49,4 +49,6 @@ extern NSString * const ItunesDomain;
  */
 - (NSString*)avoidRedirectsString;
 
++ (NSURL *)URLWithItunesArtistId:(NSNumber *)iTunesId andAffiliateId:(NSString *)affiliateID;
+
 @end

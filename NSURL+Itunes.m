@@ -88,4 +88,10 @@ NSString * const ItunesDomain = @"itunes.apple.com";
     }
 }
 
++ (NSURL *)URLWithItunesArtistId:(NSNumber *)iTunesId andAffiliateId:(NSString *)affiliateID
+{
+    NSString *urlString = [NSString stringWithFormat:@"https://itunes.apple.com/artist/id%@?uo=4&at=%@", iTunesId, affiliateID];
+    return [NSURL URLWithString:urlString];
+}
+
 @end

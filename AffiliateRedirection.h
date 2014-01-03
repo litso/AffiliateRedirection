@@ -83,16 +83,22 @@ typedef void (^AffiliateRedirectionBlock)(NSURL *itunesURL, NSError *error);
  @param delegate The object to call SKStoreProductViewController on
  @param block The block to execute. The block should have the following argument signature:(ItunesURL *iTunesURL, NSError *error) iTunesURL will be nil if any of the given are malformed. error will be nil if the redirection is succeeded.
  */
-
 - (void)openAffiliateRedirectionWithProductViewController:(id)delegate
                                                     block:(AffiliateRedirectionBlock)block __attribute__((deprecated));
 
 /*
  Get a URL after the asynchronously redirection and opens it on the App Store.
- 
+
  @param block The block to execute. The block should have the following argument signature:(NSError *error) error will be nil if the redirection and the app store can be opened successfully.
  */
-
 - (void)openAffiliateRedirectionOnAppStoreWithBlock:(void (^)(NSError *error))block;
+
+
+/*
+ Get a URL after the asynchronously redirection and opens it on iTunes.
+
+ @param block The block to execute. The block should have the following argument signature:(NSError *error) error will be nil if the redirection and the app store can be opened successfully.
+ */
+- (void)openAffiliateRedirectionOnItunesWithBlock:(void (^)(NSError *))block;
 
 @end

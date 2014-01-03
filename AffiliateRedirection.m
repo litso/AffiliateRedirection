@@ -85,10 +85,20 @@ NSInteger const kAFErrorAffiliateAppStoreDoNotRespond                   = 7;
 
 - (void)openAffiliateRedirectionOnAppStoreWithBlock:(void (^)(NSError *))block
 {
+    [self openAffiliateRedirectionWithScheme:@"itms-appss" andWithBlock:block];
+}
+
+- (void)openAffiliateRedirectionOnItunesWithBlock:(void (^)(NSError *))block
+{
+    [self openAffiliateRedirectionWithScheme:@"itms" andWithBlock:block];
+}
+
+- (void)openAffiliateRedirectionWithScheme:(NSString *) scheme andWithBlock:(void (^)(NSError *))block
+{
     if (!_affilateURL) {
         block([NSError errorWithDomain:kAFDomain
-                                       code:kAFErrorAffiliateURLMissing
-                                   userInfo:@{NSLocalizedDescriptionKey: @"Affiliate URL not founded"}]);
+                                  code:kAFErrorAffiliateURLMissing
+                              userInfo:@{NSLocalizedDescriptionKey: @"Affiliate URL not founded"}]);
     }
     else {
         [self openAffiliateRedirectionWithBlock:^(NSURL *itunesURL, NSError *error) {
@@ -101,7 +111,7 @@ NSInteger const kAFErrorAffiliateAppStoreDoNotRespond                   = 7;
                                       userInfo:@{NSLocalizedDescriptionKey: @"Itunes URL schema not founded"}]);
             } else {
                 NSString *noSchemaURL = [itunesURL.absoluteString stringByReplacingCharactersInRange:range withString:@""];
-                NSString *absoluteAppStoreURL = [NSString stringWithFormat:@"%@://%@", @"itms-appss", noSchemaURL];
+                NSString *absoluteAppStoreURL = [NSString stringWithFormat:@"%@://%@", scheme, noSchemaURL];
                 NSURL *appStoreURL = [NSURL URLWithString:absoluteAppStoreURL];
                 if ( [[UIApplication sharedApplication] canOpenURL:appStoreURL] ) {
                     [[UIApplication sharedApplication] openURL:appStoreURL];
@@ -112,7 +122,6 @@ NSInteger const kAFErrorAffiliateAppStoreDoNotRespond                   = 7;
                                               code:kAFErrorAffiliateAppStoreDoNotRespond
                                           userInfo:@{NSLocalizedDescriptionKey: @"App Store can't be opened"}]);
                 }
-                
             }
         }];
     }
